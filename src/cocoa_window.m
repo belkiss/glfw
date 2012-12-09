@@ -144,6 +144,22 @@
 
 @end
 
+// Converts Mac OS X key modifiers into GLFW ones
+//
+static int convertKeyMods(NSUInteger flags)
+{
+    int mods = 0;
+
+    if (flags & NSShiftKeyMask)
+        mods |= GLFW_MOD_SHIFT;
+    if (flags & NSControlKeyMask)
+        mods |= GLFW_MOD_CTRL;
+    if (flags & NSAlternateKeyMask)
+        mods |= GLFW_MOD_ALT;
+
+    return mods;
+}
+
 // Converts a Mac OS X keycode to a GLFW keycode
 //
 static int convertMacKeyCode(unsigned int macKeyCode)
@@ -342,7 +358,10 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
 - (void)mouseDown:(NSEvent *)event
 {
-    _glfwInputMouseClick(window, GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS);
+    _glfwInputMouseClick(window,
+                         GLFW_MOUSE_BUTTON_LEFT,
+                         GLFW_PRESS,
+                         convertKeyMods([event modifierFlags]));
 }
 
 - (void)mouseDragged:(NSEvent *)event
@@ -352,7 +371,10 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
 - (void)mouseUp:(NSEvent *)event
 {
-    _glfwInputMouseClick(window, GLFW_MOUSE_BUTTON_LEFT, GLFW_RELEASE);
+    _glfwInputMouseClick(window,
+                         GLFW_MOUSE_BUTTON_LEFT,
+                         GLFW_RELEASE,
+                         convertKeyMods([event modifierFlags]));
 }
 
 - (void)mouseMoved:(NSEvent *)event
@@ -371,7 +393,10 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
 - (void)rightMouseDown:(NSEvent *)event
 {
-    _glfwInputMouseClick(window, GLFW_MOUSE_BUTTON_RIGHT, GLFW_PRESS);
+    _glfwInputMouseClick(window,
+                         GLFW_MOUSE_BUTTON_RIGHT,
+                         GLFW_PRESS,
+                         convertKeyMods([event modifierFlags]));
 }
 
 - (void)rightMouseDragged:(NSEvent *)event
@@ -381,12 +406,18 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
 - (void)rightMouseUp:(NSEvent *)event
 {
-    _glfwInputMouseClick(window, GLFW_MOUSE_BUTTON_RIGHT, GLFW_RELEASE);
+    _glfwInputMouseClick(window,
+                         GLFW_MOUSE_BUTTON_RIGHT,
+                         GLFW_RELEASE,
+                         convertKeyMods([event modifierFlags]));
 }
 
 - (void)otherMouseDown:(NSEvent *)event
 {
-    _glfwInputMouseClick(window, [event buttonNumber], GLFW_PRESS);
+    _glfwInputMouseClick(window,
+                         [event buttonNumber],
+                         GLFW_PRESS,
+                         convertKeyMods([event modifierFlags]));
 }
 
 - (void)otherMouseDragged:(NSEvent *)event
@@ -396,7 +427,10 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
 - (void)otherMouseUp:(NSEvent *)event
 {
-    _glfwInputMouseClick(window, [event buttonNumber], GLFW_RELEASE);
+    _glfwInputMouseClick(window,
+                         [event buttonNumber],
+                         GLFW_RELEASE,
+                         convertKeyMods([event modifierFlags]));
 }
 
 - (void)mouseExited:(NSEvent *)event
@@ -432,9 +466,14 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
 - (void)keyDown:(NSEvent *)event
 {
-    _glfwInputKey(window, convertMacKeyCode([event keyCode]), GLFW_PRESS);
+    const NSUInteger mods = [event modifierFlags];
 
-    if ([event modifierFlags] & NSCommandKeyMask)
+    _glfwInputKey(window,
+                  convertMacKeyCode([event keyCode]),
+                  GLFW_PRESS,
+                  convertKeyMods(mods));
+
+    if (mods & NSCommandKeyMask)
         [super keyDown:event];
     else
     {
@@ -461,12 +500,15 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
     key = convertMacKeyCode([event keyCode]);
     if (key != -1)
-      _glfwInputKey(window, key, mode);
+        _glfwInputKey(window, key, mode, convertKeyMods([event modifierFlags]));
 }
 
 - (void)keyUp:(NSEvent *)event
 {
-    _glfwInputKey(window, convertMacKeyCode([event keyCode]), GLFW_RELEASE);
+    _glfwInputKey(window,
+                  convertMacKeyCode([event keyCode]),
+                  GLFW_RELEASE,
+                  convertKeyMods([event modifierFlags]));
 }
 
 - (void)scrollWheel:(NSEvent *)event

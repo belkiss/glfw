@@ -45,7 +45,7 @@ static void window_focus_callback(GLFWwindow* window, int focused)
            focused ? "focused" : "defocused");
 }
 
-static void window_key_callback(GLFWwindow* window, int key, int action)
+static void window_key_callback(GLFWwindow* window, int key, int action, int mods)
 {
     if (action != GLFW_PRESS)
         return;

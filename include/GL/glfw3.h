@@ -404,6 +404,21 @@ extern "C" {
 
 /*! @} */
 
+/*! @name keys Modifier key flags
+ *  @{ */
+
+/*! @ingroup input
+ */
+#define GLFW_MOD_SHIFT           0x0001
+/*! @ingroup input
+ */
+#define GLFW_MOD_CTRL            0x0002
+/*! @ingroup input
+ */
+#define GLFW_MOD_ALT             0x0004
+
+/*! @} */
+
 /*! @defgroup buttons Mouse buttons
  *  @ingroup input
  *  @{ */
@@ -631,7 +646,7 @@ typedef void (* GLFWwindowiconifyfun)(GLFWwindow*,int);
  *
  *  @sa glfwSetMouseButtonCallback
  */
-typedef void (* GLFWmousebuttonfun)(GLFWwindow*,int,int);
+typedef void (* GLFWmousebuttonfun)(GLFWwindow*,int,int,int);
 
 /*! @brief The function signature for cursor position callbacks.
  *  @param[in] window The window that received the event.
@@ -671,7 +686,7 @@ typedef void (* GLFWscrollfun)(GLFWwindow*,double,double);
  *
  *  @sa glfwSetKeyCallback
  */
-typedef void (* GLFWkeyfun)(GLFWwindow*,int,int);
+typedef void (* GLFWkeyfun)(GLFWwindow*,int,int,int);
 
 /*! @brief The function signature for Unicode character callbacks.
  *  @param[in] window The window that received the event.
