@@ -66,22 +66,6 @@ void _glfwInputWindowFocus(_GLFWwindow* window, GLboolean focused)
     {
         if (_glfw.focusedWindow == window)
         {
-            int i;
-
-            // Release all pressed keyboard keys
-            for (i = 0;  i <= GLFW_KEY_LAST;  i++)
-            {
-                if (window->key[i] == GLFW_PRESS)
-                    _glfwInputKey(window, i, GLFW_RELEASE, 0);
-            }
-
-            // Release all pressed mouse buttons
-            for (i = 0;  i <= GLFW_MOUSE_BUTTON_LAST;  i++)
-            {
-                if (window->mouseButton[i] == GLFW_PRESS)
-                    _glfwInputMouseClick(window, i, GLFW_RELEASE, 0);
-            }
-
             _glfw.focusedWindow = NULL;
 
             if (window->callbacks.focus)
@@ -257,7 +241,7 @@ GLFWAPI GLFWwindow* glfwCreateWindow(int width, int height,
     // The GLFW specification states that fullscreen windows have the cursor
     // captured by default
     if (wndconfig.monitor)
-        glfwSetInputMode((GLFWwindow*) window, GLFW_CURSOR_MODE, GLFW_CURSOR_CAPTURED);
+        glfwSetCursorMode((GLFWwindow*) window, GLFW_CURSOR_CAPTURED);
 
     if (wndconfig.monitor == NULL && wndconfig.visible)
         glfwShowWindow((GLFWwindow*) window);

@@ -87,7 +87,7 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    glfwSetInputMode(window, GLFW_CURSOR_MODE, GLFW_CURSOR_NORMAL);
+    glfwSetCursorMode(window, GLFW_CURSOR_NORMAL);
 
     glfwSetWindowFocusCallback(window, window_focus_callback);
     glfwSetKeyCallback(window, window_key_callback);

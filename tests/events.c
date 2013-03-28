@@ -185,8 +185,6 @@ static const char* get_action_name(int action)
             return "pressed";
         case GLFW_RELEASE:
             return "released";
-        case GLFW_REPEAT:
-            return "repeated";
     }
 
     return "caused unknown action";

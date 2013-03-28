@@ -296,7 +296,6 @@ GLFW.
    any client API header
  * Added `GLFW_VISIBLE` window hint and parameter for controlling and polling
    window visibility
- * Added `GLFW_REPEAT` key action for repeated keys
  * Added key modifier parameter to key and mouse button callbacks
  * Added `windows` simple multi-window test program
  * Added `sharing` simple OpenGL object sharing test program
@@ -333,11 +332,11 @@ GLFW.
    based on US layout
  * Replaced mouse wheel interface with two-dimensional, floating point scrolling
    interface
- * Replaced `glfwEnable` and `glfwDisable` with `glfwGetInputMode` and
-   `glfwSetInputMode`
+ * Replaced `glfwEnable` and `glfwDisable` with `glfwGetCursorMode` and
+   `glfwSetCursorMode`
  * Replaced `joystick` test with graphical version
  * Replaced automatic closing of windows with the window close flag
- * Removed the `GLFW_KEY_REPEAT` input option
+ * Removed input state cache and related functions
  * Removed event auto-polling and the `GLFW_AUTO_POLL_EVENTS` window enable
  * Removed the Win32 port .def files
  * Removed the entire threading API

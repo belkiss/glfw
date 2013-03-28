@@ -235,10 +235,6 @@ extern "C" {
  *  @ingroup input
  */
 #define GLFW_PRESS                  1
-/*! @brief The key was held down until it repeated.
- *  @ingroup input
- */
-#define GLFW_REPEAT                 2
 /*! @} */
 
 /* Keyboard raw key codes.
@@ -681,7 +677,7 @@ typedef void (* GLFWscrollfun)(GLFWwindow*,double,double);
 /*! @brief The function signature for keyboard key callbacks.
  *  @param[in] window The window that received the event.
  *  @param[in] key The [keyboard key](@ref keys) that was pressed or released.
- *  @param[in] action @ref GLFW_PRESS, @ref GLFW_RELEASE or @ref GLFW_REPEAT.
+ *  @param[in] action @ref GLFW_PRESS or @ref GLFW_RELEASE
  *  @ingroup input
  *
  *  @sa glfwSetKeyCallback
@@ -1641,93 +1637,34 @@ GLFWAPI void glfwPollEvents(void);
  */
 GLFWAPI void glfwWaitEvents(void);
 
-/*! @brief Returns the value of an input option for the specified window.
+/*! @brief Returns the cursor mode for the specified window.
  *
  *  @param[in] window The window to query.
- *  @param[in] mode One of `GLFW_CURSOR_MODE`, `GLFW_STICKY_KEYS` or
- *  `GLFW_STICKY_MOUSE_BUTTONS`.
  *
- *  @sa glfwSetInputMode
+ *  @sa glfwSetCursorMode
  *
  *  @ingroup input
  */
-GLFWAPI int glfwGetInputMode(GLFWwindow* window, int mode);
+GLFWAPI int glfwGetCursorMode(GLFWwindow* window);
 
-/*! @brief Sets an input option for the specified window.
+/*! @brief Sets the cursor mode for the specified window.
  *  @param[in] window The window whose input mode to set.
- *  @param[in] mode One of `GLFW_CURSOR_MODE`, `GLFW_STICKY_KEYS` or
- *  `GLFW_STICKY_MOUSE_BUTTONS`.
- *  @param[in] value The new value of the specified input mode.
- *  @ingroup input
+ *  @param[in] mode One of `GLFW_CURSOR_NORMAL`, `GLFW_CURSOR_HIDDEN` or
+ *  `GLFW_CURSOR_CAPTURED`.
  *
- *  If `mode` is `GLFW_CURSOR_MODE`, the value must be one of the supported input
- *  modes:
+ *  The mode must be one of the following:
  *  - `GLFW_CURSOR_NORMAL` makes the cursor visible and behaving normally.
  *  - `GLFW_CURSOR_HIDDEN` makes the cursor invisible when it is over the client
  *    area of the window.
  *  - `GLFW_CURSOR_CAPTURED` makes the cursor invisible and unable to leave the
  *    window but unconstrained in terms of position.
  *
- *  If `mode` is `GLFW_STICKY_KEYS`, the value must be either `GL_TRUE` to
- *  enable sticky keys, or `GL_FALSE` to disable it.  If sticky keys are
- *  enabled, a key press will ensure that @ref glfwGetKey returns @ref
- *  GLFW_PRESS the next time it is called even if the key had been released
- *  before the call.
- *
- *  If `mode` is `GLFW_STICKY_MOUSE_BUTTONS`, the value must be either `GL_TRUE`
- *  to enable sticky mouse buttons, or `GL_FALSE` to disable it.  If sticky
- *  mouse buttons are enabled, a mouse button press will ensure that @ref
- *  glfwGetMouseButton returns @ref GLFW_PRESS the next time it is called even
- *  if the mouse button had been released before the call.
- *
  *  @bug **Mac OS X:** The @ref GLFW_CURSOR_HIDDEN value of @ref
  *  GLFW_CURSOR_MODE is not yet implemented.
  *
- *  @sa glfwGetInputMode
+ *  @sa glfwGetCursorMode
  */
-GLFWAPI void glfwSetInputMode(GLFWwindow* window, int mode, int value);
-
-/*! @brief Returns the last reported state of a keyboard key for the specified
- *  window.
- *
- *  This function returns the last state reported for the specified key to the
- *  specified window.  The returned state is one of `GLFW_PRESS` or
- *  `GLFW_RELEASE`.  The higher-level state `GLFW_REPEAT` is only reported to
- *  the key callback.
- *
- *  If the `GLFW_STICKY_KEYS` input mode is enabled, this function returns
- *  `GLFW_PRESS` the first time you call this function after a key has been
- *  pressed, even if the key has already been released.
- *
- *  The key functions deal with physical keys, with [key tokens](@ref keys)
- *  named after their use on the standard US keyboard layout.  If you want to
- *  input text, use the Unicode character callback instead.
- *
- *  @param[in] window The desired window.
- *  @param[in] key The desired [keyboard key](@ref keys).
- *  @return One of `GLFW_PRESS` or `GLFW_RELEASE`.
- *
- *  @ingroup input
- */
-GLFWAPI int glfwGetKey(GLFWwindow* window, int key);
-
-/*! @brief Returns the last reported state of a mouse button for the specified
- *  window.
- *
- *  This function returns the last state reported for the specified mouse button
- *  to the specified window.
- *
- *  If the `GLFW_STICKY_MOUSE_BUTTONS` input mode is enabled, this function
- *  returns `GLFW_PRESS` the first time you call this function after a mouse
- *  button has been pressed, even if the mouse button has already been released.
- *
- *  @param[in] window The desired window.
- *  @param[in] button The desired [mouse button](@ref buttons).
- *  @return One of `GLFW_PRESS` or `GLFW_RELEASE`.
- *
- *  @ingroup input
- */
-GLFWAPI int glfwGetMouseButton(GLFWwindow* window, int button);
+GLFWAPI void glfwSetCursorMode(GLFWwindow* window, int mode);
 
 /*! @brief Retrieves the last reported cursor position, relative to the client
  *  area of the window.
