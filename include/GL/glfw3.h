@@ -677,12 +677,13 @@ typedef void (* GLFWscrollfun)(GLFWwindow*,double,double);
 /*! @brief The function signature for keyboard key callbacks.
  *  @param[in] window The window that received the event.
  *  @param[in] key The [keyboard key](@ref keys) that was pressed or released.
+ *  @param[in] code The OEM-specific scancode of the key.
  *  @param[in] action @ref GLFW_PRESS or @ref GLFW_RELEASE
  *  @ingroup input
  *
  *  @sa glfwSetKeyCallback
  */
-typedef void (* GLFWkeyfun)(GLFWwindow*,int,int,int);
+typedef void (* GLFWkeyfun)(GLFWwindow*,int,int,int,int);
 
 /*! @brief The function signature for Unicode character callbacks.
  *  @param[in] window The window that received the event.

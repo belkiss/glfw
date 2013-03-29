@@ -580,7 +580,7 @@ void _glfwInputWindowCloseRequest(_GLFWwindow* window);
  *  @param[in] mods The modifiers pressed when the event was generated.
  *  @ingroup event
  */
-void _glfwInputKey(_GLFWwindow* window, int key, int action, int mods);
+void _glfwInputKey(_GLFWwindow* window, int key, int scancode, int action, int mods);
 
 /*! @brief Notifies shared code of a Unicode character input event.
  *  @param[in] window The window that received the event.

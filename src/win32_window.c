@@ -433,7 +433,11 @@ static LRESULT CALLBACK windowProc(HWND hWnd, UINT uMsg,
         case WM_KEYDOWN:
         case WM_SYSKEYDOWN:
         {
-            _glfwInputKey(window, translateKey(wParam, lParam), GLFW_PRESS, getKeyMods());
+            _glfwInputKey(window,
+                          translateKey(wParam, lParam),
+                          (lParam >> 16) & 0xf,
+                          GLFW_PRESS,
+                          getKeyMods());
             break;
         }
 
@@ -451,17 +455,21 @@ static LRESULT CALLBACK windowProc(HWND hWnd, UINT uMsg,
             if (wParam == VK_SHIFT)
             {
                 // Special trick: release both shift keys on SHIFT up event
-                _glfwInputKey(window, GLFW_KEY_LEFT_SHIFT, GLFW_RELEASE, mods);
-                _glfwInputKey(window, GLFW_KEY_RIGHT_SHIFT, GLFW_RELEASE, mods);
+                _glfwInputKey(window, GLFW_KEY_LEFT_SHIFT, 0, GLFW_RELEASE, mods);
+                _glfwInputKey(window, GLFW_KEY_RIGHT_SHIFT, 0, GLFW_RELEASE, mods);
             }
             else if (wParam == VK_SNAPSHOT)
             {
                 // Key down is not reported for the print screen key
-                _glfwInputKey(window, GLFW_KEY_PRINT_SCREEN, GLFW_PRESS, mods);
-                _glfwInputKey(window, GLFW_KEY_PRINT_SCREEN, GLFW_RELEASE, mods);
+                _glfwInputKey(window, GLFW_KEY_PRINT_SCREEN, 0, GLFW_PRESS, mods);
+                _glfwInputKey(window, GLFW_KEY_PRINT_SCREEN, 0, GLFW_RELEASE, mods);
             }
             else
-                _glfwInputKey(window, translateKey(wParam, lParam), GLFW_RELEASE, getKeyMods());
+                _glfwInputKey(window,
+                              translateKey(wParam, lParam),
+                              GLFW_RELEASE,
+                              (lParam >> 16) & 0xf,
+                              getKeyMods());
 
             break;
         }
@@ -1042,10 +1050,10 @@ void _glfwPlatformPollEvents(void)
             // See if this differs from our belief of what has happened
             // (we only have to check for lost key up events)
             if (!lshift_down && window->key[GLFW_KEY_LEFT_SHIFT] == 1)
-                _glfwInputKey(window, GLFW_KEY_LEFT_SHIFT, GLFW_RELEASE, getKeyMods());
+                _glfwInputKey(window, GLFW_KEY_LEFT_SHIFT, 0, GLFW_RELEASE, getKeyMods());
 
             if (!rshift_down && window->key[GLFW_KEY_RIGHT_SHIFT] == 1)
-                _glfwInputKey(window, GLFW_KEY_RIGHT_SHIFT, GLFW_RELEASE, getKeyMods());
+                _glfwInputKey(window, GLFW_KEY_RIGHT_SHIFT, 0, GLFW_RELEASE, getKeyMods());
         }
 
         // Did the cursor move in an focused window that has captured the cursor

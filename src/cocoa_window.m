@@ -470,6 +470,7 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
     _glfwInputKey(window,
                   convertMacKeyCode([event keyCode]),
+                  [event keyCode],
                   GLFW_PRESS,
                   convertKeyMods(mods));
 
@@ -498,9 +499,11 @@ static int convertMacKeyCode(unsigned int macKeyCode)
 
     window->ns.modifierFlags = newModifierFlags;
 
-    key = convertMacKeyCode([event keyCode]);
-    if (key != -1)
-        _glfwInputKey(window, key, mode, convertKeyMods([event modifierFlags]));
+    _glfwInputKey(window,
+                  convertMacKeyCode([event keyCode]),
+                  [event keyCode],
+                  mode,
+                  convertKeyMods([event modifierFlags]));
 }
 
 - (void)keyUp:(NSEvent *)event

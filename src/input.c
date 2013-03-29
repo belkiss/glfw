@@ -35,10 +35,10 @@
 //////                         GLFW event API                       //////
 //////////////////////////////////////////////////////////////////////////
 
-void _glfwInputKey(_GLFWwindow* window, int key, int action, int mods)
+void _glfwInputKey(_GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (window->callbacks.key)
-        window->callbacks.key((GLFWwindow*) window, key, action, mods);
+        window->callbacks.key((GLFWwindow*) window, key, scancode, action, mods);
 }
 
 void _glfwInputChar(_GLFWwindow* window, unsigned int character)
