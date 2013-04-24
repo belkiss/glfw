@@ -189,15 +189,15 @@ static void removeJoystick(_GLFWjoy* joystick)
         return;
 
     for (i = 0;  i < CFArrayGetCount(joystick->axisElements);  i++)
-        free(CFArrayGetValueAtIndex(joystick->axisElements, i));
+        free((void*) CFArrayGetValueAtIndex(joystick->axisElements, i));
     CFArrayRemoveAllValues(joystick->axisElements);
 
     for (i = 0;  i < CFArrayGetCount(joystick->buttonElements);  i++)
-        free(CFArrayGetValueAtIndex(joystick->buttonElements, i));
+        free((void*) CFArrayGetValueAtIndex(joystick->buttonElements, i));
     CFArrayRemoveAllValues(joystick->buttonElements);
 
     for (i = 0;  i < CFArrayGetCount(joystick->hatElements);  i++)
-        free(CFArrayGetValueAtIndex(joystick->hatElements, i));
+        free((void*) CFArrayGetValueAtIndex(joystick->hatElements, i));
     CFArrayRemoveAllValues(joystick->hatElements);
 
     (*(joystick->interface))->close(joystick->interface);
