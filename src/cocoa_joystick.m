@@ -200,6 +200,9 @@ static void removeJoystick(_GLFWjoy* joystick)
         free((void*) CFArrayGetValueAtIndex(joystick->hatElements, i));
     CFArrayRemoveAllValues(joystick->hatElements);
 
+    free(joystick->axes);
+    free(joystick->buttons);
+
     (*(joystick->interface))->close(joystick->interface);
     (*(joystick->interface))->Release(joystick->interface);
 
