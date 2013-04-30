@@ -422,7 +422,7 @@ void _glfwInitJoysticks(void)
         joystick->axes = (float*) calloc(CFArrayGetCount(joystick->axisElements),
                                          sizeof(float));
         joystick->buttons = (unsigned char*) calloc(CFArrayGetCount(joystick->buttonElements) +
-                                                    CFArrayGetCount(joystick->hatElements), 1);
+                                                    CFArrayGetCount(joystick->hatElements) * 4, 1);
 
         joy++;
         if (joy > GLFW_JOYSTICK_LAST)
@@ -478,7 +478,7 @@ unsigned char* _glfwPlatformGetJoystickButtons(int joy, int* count)
         return NULL;
 
     *count = (int) CFArrayGetCount(joystick->buttonElements) +
-             (int) CFArrayGetCount(joystick->hatElements);
+             (int) CFArrayGetCount(joystick->hatElements) * 4;
     return joystick->buttons;
 }
 
